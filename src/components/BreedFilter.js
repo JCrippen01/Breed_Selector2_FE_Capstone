@@ -1,6 +1,7 @@
 import React,{ useState, useEffect} from "react";
 import { GetAllBreeds } from "./ApiManager"
 import "./BreedFilter.css";
+import { BreedSearch } from "./BreedSearch";
 
 
 
@@ -14,18 +15,58 @@ export function BreedFilter({}) {
         size: 0,
         grooming: 0,
     })
+    
  useEffect(() => {
     GetAllBreeds()
       .then(breeds => {
           setBreeds(breeds)
+          
       })
       }, [])
-const filteredBreeds = breeds.filter(breed => breed.apartment >= breedCopy.apartment
-        && breed.energy >= breedCopy.energy && breed.novice_owner >= breedCopy.novice_owner && breed.shedding >= breedCopy.shedding && breed.grooming >= breedCopy.grooming && breed.size >= breedCopy.size)
+      useEffect(() => {
+           if(breedCopy.apartment > 0 ) {
+               const filterApartment = breeds.filter(breed => breed.apartment >= breedCopy.apartment)
+               setBreeds(filterApartment)
+               
+           }
+           if(breedCopy.energy> 0 ) {
+               const filterEnergy = breeds.filter(breed => breed.energy >= breedCopy.energy)
+               setBreeds(filterEnergy)
+               
+           }
+           if(breedCopy.novice_owner> 0 ) {
+               const filterNovice = breeds.filter(breed => breed.novice_owner >= breedCopy.novice_owner)
+               setBreeds(filterNovice)
+               
+           }          
+           if(breedCopy.shedding> 0 ) {
+               const filterShedding = breeds.filter(breed => breed.shedding == breedCopy.shedding)
+               setBreeds(filterShedding)
+               
+           }
+           if(breedCopy.grooming> 0 ) {
+               const filterGrooming = breeds.filter(breed => breed.grooming == breedCopy.grooming)
+               setBreeds(filterGrooming)
+               
+           }
+           if(breedCopy.size> 0 ) {debugger
+               const filterSize = breeds.filter(breed => breed.size == breedCopy.size)
+               setBreeds(filterSize)
+               
+           }
+           
+           
+            }, [breedCopy])
+            
+console.log(breeds)
+
+const filteredBreeds = breeds.filter(breed => breed.good_in_apartment  >= breedCopy.apartment
+        && breed.energy >= breedCopy.energy && breed.good_for_novice_owner >= breedCopy.novice_owner && breed.shedding <= breedCopy.shedding
+        && breed.grooming >= breedCopy.grooming && breed.size >= breedCopy.size)
         console.log(filteredBreeds)
 return(
     <>
-
+     <BreedSearch breedFilter = {breeds}/>
     <div className= "container">
           <span className="user_selections">Pick a drop down to answer the questions.</span>
 
