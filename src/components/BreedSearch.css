@@ -1,7 +1,10 @@
 div.dropdown-search-breeds {
-  max-width: 250px;
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  max-width: 300px;
   border-width: 2px;
   border: rgb(7, 7, 7);
   border-style: solid;
-  
-}
+  }
