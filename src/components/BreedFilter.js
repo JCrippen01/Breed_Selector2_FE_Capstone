@@ -5,6 +5,9 @@ import { BreedSearch } from "./BreedSearch";
 
 export function BreedFilter({}) {
   const [breeds, setBreeds] = useState([]);
+  const [breedItems]  = useState([]);
+  const [dropDownState, setdropDownState] = useState([]);
+  const [searchState, setSearchState] = useState(false);   
   const [breedCopy, setFilterParams] = useState({
     apartment: 0,
     energy: 0,
@@ -12,7 +15,7 @@ export function BreedFilter({}) {
     shedding: 0,
     size: 0,
     grooming: 0,
-  });
+   });
 
   useEffect(() => {
     GetAllBreeds().then((breeds) => {
@@ -40,67 +43,116 @@ export function BreedFilter({}) {
     }
     if (breedCopy.shedding > 0) {
       const filterShedding = breeds.filter(
-        (breed) => breed.shedding == breedCopy.shedding
+        (breed) => breed.shedding === breedCopy.shedding
       );
       setBreeds(filterShedding);
     }
     if (breedCopy.grooming > 0) {
       const filterGrooming = breeds.filter(
-        (breed) => breed.grooming == breedCopy.grooming
+        (breed) => breed.grooming === breedCopy.grooming
       );
       setBreeds(filterGrooming);
     }
     if (breedCopy.size > 0) {
-      debugger;
-      const filterSize = breeds.filter((breed) => breed.size == breedCopy.size);
+      const filterSize = breeds.filter((breed) => breed.size === breedCopy.size);
       setBreeds(filterSize);
     }
+   
   }, [breedCopy]);
 
-  console.log(breeds);
+//   console.log(breeds);
 
+ 
   const filteredBreeds = breeds.filter(
     (breed) =>
-      breed.good_in_apartment >= breedCopy.apartment &&
-      breed.energy >= breedCopy.energy &&
-      breed.good_for_novice_owner >= breedCopy.novice_owner &&
-      breed.shedding <= breedCopy.shedding &&
-      breed.grooming >= breedCopy.grooming &&
-      breed.size >= breedCopy.size
+      breed.good_in_apartment >= breedCopy.apartment && breed.energy >= breedCopy.energy &&
+      breed.good_for_novice_owner >= breedCopy.novice_owner && breed.shedding <= breedCopy.shedding &&
+      breed.grooming >= breedCopy.grooming && breed.size >= breedCopy.size
+
+
+
+      
+       
   );
-  console.log(filteredBreeds);
+//   console.log(filteredBreeds);
+ 
+
   return (
     <>
       {/* SEARCH */}
       <article className ="search-container">
            <section className="instructions">
                 <h1>What Pup Should You Get?</h1>
-                <p1>This list has been sub-setted out to only AKC qualified breeds, this is to ensure genetic trait
-repeatability, and testing for traits in which dogs were selectively bred for.
+                <div className="scroll">
+                <p className="main">
+This list has been sub-setted out to only AKC qualified breeds, this is to ensure genetic trait
+repeatability, and testing for traits in which dogs{"\n"} were selectively bred for.{"\n"}
+{"\n"}
+Dashboard General info and Instructions: {"\n"}
+{"\n"}
+To find your purrrfect puppy...Wait...hmmm.... 'Every Dog Has its Day' and today could be they day you find your best freind.
+{"\n"}
+There are a few ways to use the breed search tool:{"\n"}
+{"\n"}
+{`1.)`} Use the Search and drop down tool. This will allow you to choose from the entire data base.{"\n"}
 
-Dashboard
+{`2.)`} If there are too many puppies (primus_sucks) then you can simply start answering the questions based on your current life style.{"\n"}
+{"\n"}
+All of these categories have been aggregated from several different ratings assigned by AKC, UKC, and other sites such as Dogtime.com.
+{"\n"}
+{"\n"}
+Please note: This is only for Education Purposes (for me to learn React). I obtained this data by webscraping Dogtime.com, AKC.org,
+and WikiPedia dogsites.
+{"\n"}
+{"\n"}
+Here are some definitions of the data:{"\n"}
+{"\n"}
+Breed: Full data set Contains 1200 Breeds. All are UKC,AKC.{"\n"}
+{"\n"}
+Height_low_inches: Sample taken from 200 different animals of same breed, then averaged.{"\n"}
+{"\n"}
+Height_high_inches: Sample taken from 200 different animals of same breed, then averaged.{"\n"}
+{"\n"}
+Weight_low_lbs: Sample taken from 200 different animals of same breed, then averaged.{"\n"}
+{"\n"}
+Weight_high_lbs: Sample taken from 200 different animals of same breed, then averaged.{"\n"}
+{"\n"}
+Prefers_cold_weather: Ratings are from dogtime.com, measurements unknown.  {"\n"}
+{"\n"}
+Prefers_hot_weather: Ratings are from dogtime.com, measurements unknown.{"\n"}  
+{"\n"}
+Energy: Rated from 1-5. 1 is lowest (no energy). 5 is highest{"\n"}
+{"\n"}
+Apartment: Rated from 1-5. (1 is house/big yard ect). (5 is smallest, New York rent Saver+){"\n"}
+{"\n"}
+Novice_owner: Rated from 1-5. (1 requires most experience). (5 is for new owners){"\n"}
+{"\n"}
+Independant: Rated from 1-5. (1 is most independant). (5 is least independant){"\n"}
+{"\n"}
+Kid_friendly: Rated from 1-5. (1 is lowest worst with kids). (5 is highest best with Kids){"\n"}
+{"\n"}
+Shedding: Rated from 1-5. (1 is least shedding). (5 is most shedding){"\n"}
+{"\n"}
+Grooming: Rated from 1-5. (1 requires the most Grooming). (5 is least amount of grooming.){"\n"} 
+{"\n"}
+Health: Rated from 1-5. (1 has most health issues). (5 is the most healthy).{"\n"}
+{"\n"}
+Size: Aggregated from heigh, weight stats.{"\n"}
+{"\n"}
+Trainabilty: Aggregated from intelligence, energy, independant, and class (working, sporting ect){"\n"}
+{"\n"}
+Intelligence: Ratings are from dogtime.com, measurements unknown. {"\n"}
+{"\n"}
+Summary: Text taken from AKC.org{"\n"}
 
-General info and Instructions: 
-Energy : A rating of 1 is the lowest rating of Energy, and 5 is a dog that might be on crack. 
-Trainability : Trainability is based on an average against the following (Intelligence, Energy
-level, Prey Drive, and Eagerness to please.) 
-
-Shedding :  A rating of one will shed the least, while a rating of 5 will shed the most.  
-
-Apartment :  A rating of 1 will not be suited for apartment
-
-life, but would do much better on a farm, our house with a big yard. A 5 is the
-
-best apartment rating.
-
-Most of these categories have been
-
-aggregated from several different ratings assigned by AKC, UKC, and other sites such as Dogtime.com.
-
-</p1>
+</p>
+</div>
+{/* <div className="empty-box">Empty Box</div> */}
           </section>
+
            <div className="search-bar">
-      <BreedSearch breedFilter={breeds} />
+                <h3>Search for a Breed!</h3>
+      <BreedSearch breedFilter={breeds} setSearchState={setSearchState}/>
             </div>
 
       </article>
@@ -238,40 +290,63 @@ aggregated from several different ratings assigned by AKC, UKC, and other sites 
               </div>
             </div>
           </div>
-          <div className="remaining_breeds">
+          <div className="breeds-remaining" >
             <h3>Number of breeds Remaining</h3>
-            <span>{breeds.length}</span>
+            <ul className="dashboard-ul">{breeds.length}</ul>
           </div>
         </section>
         {/* SECTION 2 Size Options */}
         <section className="dashboard--size-list">
-          <div className="lowest__height">Average Low Height (in)</div>
-                  <span>{filteredBreeds.height_low_inches}</span>
-          <div className="tallest__height">Average Tallest Height (in)</div>
-                  <span>{breeds.height_high_inches}</span>
-          <div className="breed__list">Availible Breeds List</div>
-                    <ol>{breeds.breed}</ol>
+
+          <div className="lowest__height" >
+                  <h3>Average Smallest Height</h3>
+                  <ul className="dashboard-ul">{breeds[0]?.height_low_inches}</ul>
+          </div>
+          <div className="tallest__height">
+               <h3>Average Tallest Height (in)</h3>
+                  <ul className="dashboard-ul">{breeds[0]?.height_high_inches}</ul>
+          </div>
+                  
+          <div className="breed__list">
+               <h3>Availible Breeds List</h3>
+               
+                    {/* <ul className="dashboard-ul">{items}</ul> */}
+               </div>
         </section>
         {/* SECTION 3 Descripion Box and Image Box*/}
         <section className="dashboard--description-image">
-          <div className="description__title">{breeds.breed}</div>
-          <span className="breed__description">{breeds.summary}</span>
-          <div className="breed__img">{breeds.image}</div>
+          <h1 className="description__title">{breeds[0]?.breed}</h1>
+          <div className="breed__description">
+               <p className="summary">{breeds[0]?.summary}</p>
+          </div>
+          <div className="breed__img">Feature Add image</div>
         </section>
         {/* SECTION 4 Weight, Health, Kids */}
         <section className="dashboard--weight-info">
-          <div className="lowest_weight">Lowest Average Weight (lbs)</div>
-                  <item>{filteredBreeds.weight_high_lbs}</item>
-          <div className="highest_weight">Highest Average Weight (lbs)</div>
-                  <item>{breeds.weight_high_lbs}</item>
-          <div className="health">Health</div>
-               <item>{filteredBreeds.health}</item>
-          <div className="kid_friendly">Kid Friendly</div>
-               <item>{filteredBreeds.kid_friendly}</item>
-          <div className="section-four-bottombox">Trainability</div>
-               <item>{breeds.trainability}</item>
+          <div className="lowest_weight">
+               <h3>Lowest Average Weight (lbs)</h3>
+                  <ul className="dashboard-ul">{breeds[0]?.weight_high_lbs}</ul>
+          </div>        
+          <div className="highest_weight">
+               <h3>Highest Average Weight (lbs)</h3>
+                  <ul className="dashboard-ul">{breeds[0]?.weight_high_lbs}</ul>
+          </div>
+          <div className="health">
+               <h3>Health</h3>
+               <ul className="dashboard-ul">{breeds[0]?.health}</ul>
+          </div>
+          <div className="kid_friendly">
+               <h3>Kid Friendly</h3>
+               <ul className="dashboard-ul">{breeds[0]?.kid_friendly}</ul>
+          </div>
+          <div className="section-four-bottombox">
+               <h3>Trainability</h3>
+               <ul className="dashboard-ul">{breeds[0]?.trainabilty}</ul>
+          </div>
         </section>
       </article>
+      
+
     </>
   );
 }

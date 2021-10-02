@@ -1,9 +1,5 @@
-div.dropdown-search-breeds {
-  display: flex;
-  flex-direction: column-reverse;
-  flex-wrap: nowrap;
-  justify-content: stretch;
-  max-width: 300px;
+.dropdown-search-breeds {
+  width: 400px;
   border-width: 2px;
   border: rgb(7, 7, 7);
   border-style: solid;
