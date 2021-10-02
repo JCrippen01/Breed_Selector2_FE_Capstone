@@ -106,7 +106,6 @@ ul.dashboard-ul {
     margin:20px 20px 40px 20px;
     padding: 5px 5px 10px 5px;
     color: #ffff;
-
 }
 div.lowest__height {
     background-color:#6C9D49;
@@ -141,6 +140,7 @@ h1.description__title {
 
     max-width: 15%;
     width:inherit;
+    max-height: 19em;
     height: auto;
     text-align: center;
     border-style: solid;
@@ -199,49 +199,53 @@ h1.description__title {
 .breeds-remaining {
     max-width: 100%;
     width: 100%;
-    height: 100%;
+    height: 98.5%;
     text-align: center;
     border-style: solid;
     border-color: rgb(217, 179, 0);
     border-width: 3px; 
     justify-content: center;
     font-size: 15px;
-    max-height: 33.7%;
+    /* max-height: 33.7%; */
     color: #fff;
     background-color: #1F4564;
-    border-bottom: none;
+    /* border-bottom: none; */
 }    
 
 
 
 /* Section 2 */
 .dashboard--size-list {
-    max-width: 20%;
+    max-width: 15%;
     width: 15%;
     height: auto;
+    max-height: 22em;
     text-align: center;
     justify-content:center;
-    /* border-style: solid;
+    border-style: solid;
     border-color: rgb(217, 179, 0);
-    border-width: 3px;  */
+    border-width: 3px; 
     
 
 }
 
 .lowest__height {
     width: 100%;
-    height: 15%;    
+    height: auto;
+    /* height: 15%;     */
     background-color: #fff;   
     font-size: 14px;
     color: #474747;
     text-align: center;
     border-style: solid;
     border-color: rgb(217, 179, 0);
-    border-width: 3px; 
+    border-width: 3px;
+    display: block; 
 }
 .tallest__height {
     width: 100%;
-    height: 15%;    
+    height: auto;
+    /* height: 15%;     */
     background-color: #fff;   
     font-size: 14px;
     color: #474747;
@@ -253,14 +257,18 @@ h1.description__title {
    
 .breed__list {
     width: 100%;
-    height: 68%;
+    height: 37.6em;
+    /* max-height: 39em; */
     background-color: #4382B4;
     font-size: 14px;
+    color: #fafafa;
     color: #474747;
     text-align: center;
     border-style: solid;
     border-color: rgb(217, 179, 0);
-    border-width: 3px; 
+    border-width: 3px;
+    overflow-y:scroll  
+    /* display: block */
 }
 
 
@@ -273,6 +281,7 @@ height: auto;
 margin: 0%;
 text-align: center;
 justify-content: center;
+background-color: #1F4564;
 /* border-style: solid;
 border-color: rgb(217, 179, 0);
 border-width: 3px;  */
@@ -309,9 +318,10 @@ border-width: 3px;  */
 }
 
 .breed__img {
+    padding: 20px;
     margin: 0%;
-    width: 100%;
-    height: 40.7%;
+    width: auto;
+    height: auto;
     background-color: #1F4564;
     font-size: 14px;
     color: #FFFF;

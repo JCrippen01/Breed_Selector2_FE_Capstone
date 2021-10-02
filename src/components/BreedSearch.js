@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import "./BreedSearch.css";
 
-export function BreedSearch({ breedFilter, setSearchState }) {
+export function BreedSearch({ breedFilter, setSearchState, searchState }) {
   const [breeds, setBreeds] = useState([]);
   // const [chosenBreed, setchosenBreed] = useState();
   const [dogBreeds, setDogBreeds] = useState([]);
@@ -22,7 +22,11 @@ export function BreedSearch({ breedFilter, setSearchState }) {
     <div className ="dropdown-search-breed">
       <Select
         onChange={(e) => {
-          setSearchState(true);
+          const copy = { ...searchState };
+                  copy.active = true;
+                  copy.breed = (e.value);
+                  setSearchState(copy);
+                
          }}
         options={breeds}
         placeholder="Search for Breed"

@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { GetAllBreeds } from "./ApiManager";
 import "./BreedFilter.css";
 import { BreedSearch } from "./BreedSearch";
+// import { BreedList } from "./BreedList";
 
 export function BreedFilter({}) {
   const [breeds, setBreeds] = useState([]);
   const [breedItems]  = useState([]);
   const [dropDownState, setdropDownState] = useState([]);
-  const [searchState, setSearchState] = useState(false);   
+  const [searchState, setSearchState] = useState({
+       active: false,
+       breed: ""
+  });   
   const [breedCopy, setFilterParams] = useState({
     apartment: 0,
     energy: 0,
@@ -16,6 +20,10 @@ export function BreedFilter({}) {
     size: 0,
     grooming: 0,
    });
+   const breedList = breeds.map((breed) => {return breed.breed})
+
+   const clickedBreedSearch = breeds.find( breed => searchState.breed === breed.breed)
+//    {searchState.breed === breed.value ? :}
 
   useEffect(() => {
     GetAllBreeds().then((breeds) => {
@@ -62,18 +70,16 @@ export function BreedFilter({}) {
 
 //   console.log(breeds);
 
- 
+
   const filteredBreeds = breeds.filter(
     (breed) =>
       breed.good_in_apartment >= breedCopy.apartment && breed.energy >= breedCopy.energy &&
       breed.good_for_novice_owner >= breedCopy.novice_owner && breed.shedding <= breedCopy.shedding &&
-      breed.grooming >= breedCopy.grooming && breed.size >= breedCopy.size
-
-
-
-      
+      breed.grooming >= breedCopy.grooming && breed.size >= breedCopy.size    
        
   );
+  
+
 //   console.log(filteredBreeds);
  
 
@@ -152,7 +158,7 @@ Summary: Text taken from AKC.org{"\n"}
 
            <div className="search-bar">
                 <h3>Search for a Breed!</h3>
-      <BreedSearch breedFilter={breeds} setSearchState={setSearchState}/>
+      <BreedSearch breedFilter={breeds} setSearchState={setSearchState} searchState={searchState}/>
             </div>
 
       </article>
@@ -168,9 +174,10 @@ Summary: Text taken from AKC.org{"\n"}
                   const copy = { ...breedCopy };
                   copy.apartment = parseInt(e.target.value);
                   setFilterParams(copy);
+                  setSearchState(false);
                 }}
               >
-                <option value="All">All</option>
+                <option value={0}>All</option>
                 <option value={1}>Farm</option>
                 <option value={2}>House with Yard</option>
                 <option value={3}>Town Home</option>
@@ -189,9 +196,10 @@ Summary: Text taken from AKC.org{"\n"}
                     const copy = { ...breedCopy };
                     copy.energy = parseInt(e.target.value);
                     setFilterParams(copy);
+                    setSearchState(false);
                   }}
                 >
-                  <option value="All">All</option>
+                  <option value={0}>All</option>
                   <option value={1}>Eye lids..Heavy...cant</option>
                   <option value={2}>I like TV</option>
                   <option value={3}>I work out</option>
@@ -211,9 +219,10 @@ Summary: Text taken from AKC.org{"\n"}
                     const copy = { ...breedCopy };
                     copy.novice_owner = parseInt(e.target.value);
                     setFilterParams(copy);
+                    setSearchState(false);
                   }}
                 >
-                  <option value="All">All</option>
+                  <option value={0}>All</option>
                   <option value={1}>Expert Handler</option>
                   <option value={2}>Veteran</option>
                   <option value={3}>I have owned a dog</option>
@@ -233,9 +242,10 @@ Summary: Text taken from AKC.org{"\n"}
                     const copy = { ...breedCopy };
                     copy.shedding = parseInt(e.target.value);
                     setFilterParams(copy);
+                    setSearchState(false);
                   }}
                 >
-                  <option value="All">All</option>
+                  <option value={0}>All</option>
                   <option value={1}>Sheds the least</option>
                   <option value={2}>Occasional Shedding</option>
                   <option value={3}>Seasonal Sheds</option>
@@ -255,9 +265,10 @@ Summary: Text taken from AKC.org{"\n"}
                     const copy = { ...breedCopy };
                     copy.grooming = parseInt(e.target.value);
                     setFilterParams(copy);
+                    setSearchState(false);
                   }}
                 >
-                  \<option value="All">All</option>
+                  <option value={0}>All</option>
                   <option value={1}>Daily</option>
                   <option value={2}>Weekly</option>
                   <option value={3}>Monthly</option>
@@ -278,9 +289,10 @@ Summary: Text taken from AKC.org{"\n"}
                     const copy = { ...breedCopy };
                     copy.size = parseInt(e.target.value);
                     setFilterParams(copy);
+                    setSearchState(false);
                   }}
                 >
-                  <option value="All">All</option>
+                  <option value={0}>All</option>
                   <option value={1}>Tiny</option>
                   <option value={2}>Small</option>
                   <option value={3}>Average</option>
@@ -292,7 +304,8 @@ Summary: Text taken from AKC.org{"\n"}
           </div>
           <div className="breeds-remaining" >
             <h3>Number of breeds Remaining</h3>
-            <ul className="dashboard-ul">{breeds.length}</ul>
+                
+             <ul className="dashboard-ul">{breeds.length}</ul>
           </div>
         </section>
         {/* SECTION 2 Size Options */}
@@ -300,48 +313,56 @@ Summary: Text taken from AKC.org{"\n"}
 
           <div className="lowest__height" >
                   <h3>Average Smallest Height</h3>
-                  <ul className="dashboard-ul">{breeds[0]?.height_low_inches}</ul>
+                  <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.height_low_inches : breeds[0]?.height_low_inches}</ul>
           </div>
           <div className="tallest__height">
                <h3>Average Tallest Height (in)</h3>
-                  <ul className="dashboard-ul">{breeds[0]?.height_high_inches}</ul>
+                  <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.height_high_inches : breeds[0]?.height_high_inches}</ul>
           </div>
-                  
+          {/* BREED LIST */}
           <div className="breed__list">
                <h3>Availible Breeds List</h3>
+               {breedList.map(
+                   breed=> {
+                        return <ul className="dashboard-ul" key={breed} value={breed}>{breed} </ul>
+                   } 
+               )
+               }
+               
                
                     {/* <ul className="dashboard-ul">{items}</ul> */}
                </div>
         </section>
         {/* SECTION 3 Descripion Box and Image Box*/}
         <section className="dashboard--description-image">
-          <h1 className="description__title">{breeds[0]?.breed}</h1>
+          <h1 className="description__title">{searchState.active === true ? clickedBreedSearch.breed : breeds[0]?.breed}</h1>
           <div className="breed__description">
-               <p className="summary">{breeds[0]?.summary}</p>
+               <p className="summary">{searchState.active === true ? clickedBreedSearch.summary : breeds[0]?.summary}</p>
           </div>
-          <div className="breed__img">Feature Add image</div>
+          <img className="breed__img" src={searchState.active === true ? clickedBreedSearch.summary :breeds[0]?.image} 
+                                      alt={searchState.active === true ? clickedBreedSearch.breed :breeds[0]?.breed} width="100" height="200"></img>
         </section>
         {/* SECTION 4 Weight, Health, Kids */}
         <section className="dashboard--weight-info">
           <div className="lowest_weight">
                <h3>Lowest Average Weight (lbs)</h3>
-                  <ul className="dashboard-ul">{breeds[0]?.weight_high_lbs}</ul>
+                  <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.weight_high_lbs : breeds[0]?.weight_high_lbs}</ul>
           </div>        
           <div className="highest_weight">
                <h3>Highest Average Weight (lbs)</h3>
-                  <ul className="dashboard-ul">{breeds[0]?.weight_high_lbs}</ul>
+                  <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.weight_high_lbs : breeds[0]?.weight_high_lbs}</ul>
           </div>
           <div className="health">
                <h3>Health</h3>
-               <ul className="dashboard-ul">{breeds[0]?.health}</ul>
+               <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.health : breeds[0]?.health}</ul>
           </div>
           <div className="kid_friendly">
                <h3>Kid Friendly</h3>
-               <ul className="dashboard-ul">{breeds[0]?.kid_friendly}</ul>
+               <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.kid_friendly : breeds[0]?.kid_friendly}</ul>
           </div>
           <div className="section-four-bottombox">
                <h3>Trainability</h3>
-               <ul className="dashboard-ul">{breeds[0]?.trainabilty}</ul>
+               <ul className="dashboard-ul">{searchState.active === true ? clickedBreedSearch.trainabilty : breeds[0]?.trainabilty}</ul>
           </div>
         </section>
       </article>
