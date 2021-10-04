@@ -3,7 +3,7 @@ import { NavBar } from "./nav/NavBar";
 import { Route, Redirect } from "react-router-dom";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
-import "./BreedApp.css";
+// import "./BreedApp.css";
 import { BreedFilter } from "./BreedFilter";
 import { ApplicationViews } from "./ApplicationViews";
 

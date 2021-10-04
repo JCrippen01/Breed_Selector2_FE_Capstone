@@ -1,7 +1,6 @@
-div.dropdown-search-breeds {
-  max-width: 250px;
+.dropdown-search-breeds {
+  width: 400px;
   border-width: 2px;
   border: rgb(7, 7, 7);
   border-style: solid;
-  
-}
+  }
