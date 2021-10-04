@@ -323,10 +323,10 @@ Summary: Text taken from AKC.org{"\n"}
           </div>
           {/* BREED LIST */}
           <div className="breed__list">
-               <h3>Availible Breeds List</h3>
+               <h3 className="breed--list--title">Availible Breeds List</h3>
                {breedList.map(
                    breed=> {
-                        return <ul className="dashboard-ul" key={breed} value={breed}>{breed} </ul>
+                        return <ul className="breed--list--ul" key={breed} value={breed}>{breed} </ul>
                    } 
                )
                }
@@ -343,7 +343,7 @@ Summary: Text taken from AKC.org{"\n"}
           </div>
          <div className="breed__img"> 
           <img src={searchState.active === true ? clickedBreedSearch.image :breeds[0]?.image} 
-                                      alt={searchState.active === true ? clickedBreedSearch.breed :breeds[0]?.breed}></img>
+           alt={searchState.active === true ? clickedBreedSearch.breed :breeds[0]?.breed}></img>
         </div>
         </section>
         {/* SECTION 4 Weight, Health, Kids */}
