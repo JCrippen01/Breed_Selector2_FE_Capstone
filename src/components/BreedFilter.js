@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GetAllBreeds } from "./ApiManager";
 import "./BreedFilter.css";
 import { BreedSearch } from "./BreedSearch";
-// import { BreedList } from "./BreedList";
+
 
 export function BreedFilter({}) {
   const [breeds, setBreeds] = useState([]);
@@ -20,16 +20,21 @@ export function BreedFilter({}) {
     size: 0,
     grooming: 0,
    });
-   const breedList = breeds.map((breed) => {return breed.breed})
 
-   const clickedBreedSearch = breeds.find( breed => searchState.breed === breed.breed)
-//    {searchState.breed === breed.value ? :}
-
+   //map for BreedList box
+   const breedList = breeds?.map((breed) => {return breed.breed})
+   const clickedBreedSearch = breeds?.find( breed =>{ return  searchState.breed === breed.breed})
+   
+  
+console.log(breeds)
   useEffect(() => {
     GetAllBreeds().then((breeds) => {
       setBreeds(breeds);
     });
   }, []);
+ 
+  //Set useEffects for all Drop Down Filters.
+
   useEffect(() => {
     if (breedCopy.apartment > 0) {
       const filterApartment = breeds.filter(
@@ -76,13 +81,10 @@ export function BreedFilter({}) {
       breed.good_in_apartment >= breedCopy.apartment && breed.energy >= breedCopy.energy &&
       breed.good_for_novice_owner >= breedCopy.novice_owner && breed.shedding <= breedCopy.shedding &&
       breed.grooming >= breedCopy.grooming && breed.size >= breedCopy.size    
-       
   );
-  
 
 //   console.log(filteredBreeds);
  
-
   return (
     <>
       {/* SEARCH */}
@@ -339,8 +341,10 @@ Summary: Text taken from AKC.org{"\n"}
           <div className="breed__description">
                <p className="summary">{searchState.active === true ? clickedBreedSearch.summary : breeds[0]?.summary}</p>
           </div>
-          <img className="breed__img" src={searchState.active === true ? clickedBreedSearch.summary :breeds[0]?.image} 
-                                      alt={searchState.active === true ? clickedBreedSearch.breed :breeds[0]?.breed} width="100" height="200"></img>
+         <div className="breed__img"> 
+          <img src={searchState.active === true ? clickedBreedSearch.image :breeds[0]?.image} 
+                                      alt={searchState.active === true ? clickedBreedSearch.breed :breeds[0]?.breed}></img>
+        </div>
         </section>
         {/* SECTION 4 Weight, Health, Kids */}
         <section className="dashboard--weight-info">
