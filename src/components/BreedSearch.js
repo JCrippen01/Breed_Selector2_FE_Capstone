@@ -4,7 +4,6 @@ import "./BreedSearch.css";
 
 export function BreedSearch({ breedFilter, setSearchState, searchState }) {
   const [breeds, setBreeds] = useState([]);
-  // const [chosenBreed, setchosenBreed] = useState();
   const [dogBreeds, setDogBreeds] = useState([]);
 
   useEffect(() => {
